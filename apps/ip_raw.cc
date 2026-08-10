@@ -69,9 +69,16 @@ int main( int argc, char* argv[] )
       packet_bytes.append( chunk );
     }
 
+    // Helper subclass to expose protected DatagramSocket constructor for raw sockets
+    class RawSocket : public DatagramSocket
+    {
+    public:
+      RawSocket( int domain, int type, int protocol ) : DatagramSocket( domain, type, protocol ) {}
+    };
+
     // Create a raw socket for IPv4 datagrams
     // Domain: AF_INET, Type: SOCK_RAW, Protocol: IPPROTO_RAW
-    DatagramSocket raw_socket( AF_INET, SOCK_RAW, IPPROTO_RAW );
+    RawSocket raw_socket( AF_INET, SOCK_RAW, IPPROTO_RAW );
 
     // Send the datagram to the destination address using raw socket
     raw_socket.sendto( destination, packet_bytes );
