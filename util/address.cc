@@ -5,7 +5,9 @@
 #include <arpa/inet.h>
 #include <array>
 #include <cstring>
+#if __has_include(<linux/if_packet.h>)
 #include <linux/if_packet.h>
+#endif
 #include <memory>
 #include <netdb.h>
 #include <stdexcept>

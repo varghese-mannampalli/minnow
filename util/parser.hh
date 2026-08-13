@@ -43,7 +43,7 @@ class Parser
     void remove_prefix( uint64_t len )
     {
       while ( len and not buffer_.empty() ) {
-        const uint64_t to_pop_now = std::min( len, peek().size() );
+        const uint64_t to_pop_now = std::min( len, static_cast<uint64_t>( peek().size() ) );
         skip_ += to_pop_now;
         len -= to_pop_now;
         size_ -= to_pop_now;

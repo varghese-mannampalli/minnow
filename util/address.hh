@@ -1,5 +1,6 @@
 #pragma once
 
+#include <arpa/inet.h>
 #include <cstddef>
 #include <cstdint>
 #include <netdb.h>
@@ -8,6 +9,14 @@
 #include <string>
 #include <sys/socket.h>
 #include <utility>
+
+#ifndef htobe32
+#  define htobe32(x) htonl(x)
+#endif
+
+#ifndef AF_PACKET
+#  define AF_PACKET 17
+#endif
 
 //! Wrapper around [IPv4 addresses](@ref man7::ip) and DNS operations.
 class Address

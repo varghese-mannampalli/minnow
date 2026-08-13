@@ -19,11 +19,11 @@ void speed_test( const size_t num_chunks,   // NOLINT(bugprone-easily-swappable-
 {
   // Generate the data to be written
   const string data = [&] {
-    default_random_engine rd { random_seed };
-    uniform_int_distribution<char> ud;
+    default_random_engine rd { static_cast<unsigned int>( random_seed ) };
+    uniform_int_distribution<int> ud( 0, 255 );
     string ret;
     for ( size_t i = 0; i < num_chunks * capacity; ++i ) {
-      ret += ud( rd );
+      ret += static_cast<char>( ud( rd ) );
     }
     return ret;
   }();
