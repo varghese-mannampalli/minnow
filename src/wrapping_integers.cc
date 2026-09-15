@@ -19,8 +19,11 @@ uint64_t Wrap32::unwrap( Wrap32 zero_point, uint64_t checkpoint ) const
   const int32_t diff = static_cast<int32_t>( target_low - ckpt_low );
 
   // Handle underflow below 0
-  if ( diff < 0 && checkpoint < static_cast<uint64_t>( -diff ) ) {
-    return checkpoint + static_cast<uint64_t>( diff ) + ( 1ULL << 32 );
+  if ( diff < 0 ) {
+    const uint64_t abs_diff = static_cast<uint64_t>( -static_cast<int64_t>( diff ) );
+    if ( checkpoint < abs_diff ) {
+      return checkpoint + static_cast<uint64_t>( diff ) + ( 1ULL << 32 );
+    }
   }
 
   return checkpoint + static_cast<uint64_t>( diff );
